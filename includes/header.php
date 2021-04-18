@@ -8,9 +8,11 @@
                 <input id="search-customer" class="border" type="text" placeholder="Search via name..."> 
             </div>
         </div>
-        
     </div>
-    <button class="search-bar-button"><i class="fas fa-search"></i> Search</button>
+    <div>
+        <button class="search-bar-button"><i class="fas fa-search"></i> Search</button>
+        <button class="view-transaction-btn" onclick="location.href='transaction-history.php'"><i class="fas fa-history mr-5px"></i>Transaction History</button>
+    </div>
 </div>
 
 <div class="header-padding"></div>

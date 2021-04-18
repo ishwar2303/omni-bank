@@ -14,7 +14,7 @@ Batch: April 2021
     require_once('connection.php');
 
     //PHP script to take data out of db
-    $sql = "SELECT * FROM `cadence bank`.`customers`";
+    $sql = "SELECT * FROM `omni bank`.`customers`";
     $result = $conn->query($sql);
 
 ?>
@@ -26,7 +26,7 @@ Batch: April 2021
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>OMNI Bank</title>
     <link rel="stylesheet" href="public/CSS/styles.css">
     <script>
         function show_customers(){

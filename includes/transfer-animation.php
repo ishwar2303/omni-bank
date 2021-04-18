@@ -23,19 +23,19 @@
 </style>
 
 <div class="box">
-    <div class="move">
+    <div class="move shadow">
         <i class="fas fa-rupee-sign"></i>
     </div>
-    <div class="move">
+    <div class="move shadow">
         <i class="fas fa-rupee-sign"></i>
     </div>
-    <div class="move">
+    <div class="move shadow">
         <i class="fas fa-rupee-sign"></i>
     </div>
-    <div class="move">
+    <div class="move shadow">
         <i class="fas fa-rupee-sign"></i>
     </div>
-    <div class="move">
+    <div class="move shadow">
         <i class="fas fa-rupee-sign"></i>
     </div>
 </div>

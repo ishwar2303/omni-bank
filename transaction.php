@@ -62,7 +62,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transfer money</title>
+    <title>Make Transaction</title>
     <link rel="stylesheet" href="public/CSS/styles.css">
     <script src="https://kit.fontawesome.com/2e3ffa36c7.js" crossorigin="anonymous"></script>
     
@@ -74,8 +74,7 @@
         .search-bar-button{
             display: none;
         }
-        body{
-            background: rgb(148 168 183);
+        body{    background: rgb(207 207 207);
         }
     </style>
 </head>
@@ -85,7 +84,7 @@
 
         <div class="flex-row mt-20px pb-50px">
             <div class="child">
-                <div class="flex-col trans-card z-index-10">
+                <div class="flex-col trans-card z-index-10 shadow">
                     <h3 class="mb-20px t-c">
                         Sender's details
                     </h3>
@@ -114,7 +113,7 @@
             </div> 
 
             <div class="child">
-                <div class="flex-col trans-card z-index-10">
+                <div class="flex-col trans-card z-index-10 shadow">
                     <h3 class="mb-20px ml-20px t-c">
                     Enter Recipient details
                     </h3>
@@ -196,8 +195,10 @@
                         i++
                     })
                     btn.innerHTML = 'Confirm'
+                    btn.disabled = false
                 }
                 else{
+                    btn.disabled = true
                     transactionAnimation()
                     btn.innerHTML = '<i class="fas fa-sync-alt fa-spin mr-5px"></i> Processing transaction'
                     setTimeout(() => {
@@ -211,6 +212,7 @@
 
                     e.preventDefault()
                     let btn = document.getElementById('make-transaction-btn')
+                    btn.disabled = true
                     btn.innerHTML = '<i class="fas fa-sync-alt fa-spin mr-5px"></i> Checking Details'
                     let inputs = document.getElementsByClassName('transaction-input')
                     let holderName = inputs[0].value

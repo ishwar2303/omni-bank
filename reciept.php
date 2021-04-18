@@ -36,7 +36,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reciept</title>
+    <title>Receipt</title>
     <link rel="stylesheet" href="public/CSS/styles.css">
   
     <?php require 'includes/layout.php'; ?>
@@ -64,7 +64,7 @@
         <?php 
             if(isset($_SESSION['transaction_successfull'])){
                 ?>
-                <div class="message success-msg">
+                <div class="message success-msg no-print">
                     Transaction successfull
                 </div>
                 <?php
@@ -110,20 +110,27 @@
                 </div>
             </div>
             <div>
-                <table>
+                <table >
                     <thead>
                         <tr>
-                            <th>Transaction Id</th>
-                            <th>Amount</th>
-                            <th>Timestamp</th>
-                            <th>Status</th>
+                            <th class="dark">Transaction Id</th>
+                            <th class="dark">Amount</th>
+                            <th class="dark">Timestamp</th>
+                            <th class="dark">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="t-c"><?php echo $transaction_id; ?></td>
                             <td class="t-c"><?php echo $amount; ?> <i class="fas fa-rupee-sign"></i></td>
-                            <td class="t-c"><?php echo $timestamp; ?></td>
+                            <td class="t-c">
+                                <?php
+                                        $timestamp = new DateTime($timestamp);
+                                        echo $timestamp->format('d-m-Y');
+                                        echo '<br/>';
+                                        echo $timestamp->format('h:i:sa'); 
+                                ?>
+                            </td>
                             <td class="t-c">Success</td>
                         </tr>
                     </tbody>
