@@ -12,21 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaction History</title>
     <link rel="stylesheet" href="public/CSS/styles.css">
+    <link rel="stylesheet" href="public/CSS/hide-header-option.css">
     <?php require 'includes/layout.php'; ?>
-    <style>
-        th,td{
-            text-align: center;
-        }
-        .search-bar-button, .view-transaction-btn{
-            display: none;
-        }
-    </style>
 </head>
 <body>
     <?php require 'includes/header.php'; ?>
     <div class="wrapper">
         <?php if($result->num_rows > 0){ ?>
-        <h1>Transaction History</h1>
+        <h1 class="mb-10px secondary"><i class="fas fa-history mr-5px"></i> Transaction History</h1>
         <table>
             <thead>
                 <tr>

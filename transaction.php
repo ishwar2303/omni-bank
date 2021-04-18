@@ -4,7 +4,7 @@
 
 
     // if(isset($_SESSION['transaction_successfull'])){
-    //     header('Location: reciept.php');
+    //     header('Location: receipt.php');
     //     exit;
     // }
 
@@ -64,19 +64,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Make Transaction</title>
     <link rel="stylesheet" href="public/CSS/styles.css">
-    <script src="https://kit.fontawesome.com/2e3ffa36c7.js" crossorigin="anonymous"></script>
-    
+    <link rel="stylesheet" href="public/CSS/transaction.css">
     <?php require 'includes/layout.php'; ?>
-    <style>
-        .search-bar-container{
-            display: none;
-        }
-        .search-bar-button{
-            display: none;
-        }
-        body{    background: rgb(207 207 207);
-        }
-    </style>
 </head>
 <body>
 
@@ -116,9 +105,66 @@
                 <div class="flex-col trans-card z-index-10 shadow">
                     <h3 class="mb-20px ml-20px t-c">
                     Enter Recipient details
-                    </h3>
+                    </h3><?php 
+                        $sql = "SELECT * FROM customers ORDER BY name";
+                        $result = $conn->query($sql);
 
+                    ?>
                     <form id="transaction-form" action="" method="post" class="form">
+                        <!-- Choose from listed customers -->
+                        <?php if($result->num_rows > 0){ ?>
+                        <div class="input-container">
+                            <select id="fetch-customer" class="custom-select">
+                            <option value="">Choose from listed customers</option>
+                            <?php 
+                                while($row = $result->fetch_assoc()){
+                            ?>
+                                <option value="<?php echo $row['customer_id']; ?>"><?php echo $row['name']; ?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                        <?php } ?>
+
+                        <script>
+
+                            function fillCustomerDetails(res){
+                                res = JSON.parse(res)
+                                console.log(res)
+                                let inputs = document.getElementsByClassName('transaction-input')
+
+                                if(res.success){
+                                    let customer = JSON.parse(res.data)
+                                    inputs[0].value = customer.name
+                                    inputs[1].value = customer.account_num
+                                    inputs[3].value = customer.IFSC_Code
+                                }
+                                else{
+                                    inputs[0].value = ''
+                                    inputs[1].value = ''
+                                    inputs[3].value = ''
+                                }
+                            }
+
+                            $('#fetch-customer').on('change', () => {
+                                let customerId = $('#fetch-customer').val()
+                                let reqData = {
+                                    customer_id : customerId
+                                }
+                                let url = 'fetch-customer-details.php'
+                                $.ajax({
+                                    url,
+                                    type : 'POST',
+                                    dataType : 'html',
+                                    success : (msg) => {
+
+                                    },
+                                    complete : (res) => {
+                                        fillCustomerDetails(res.responseText)
+                                    },
+                                    data : reqData
+                                })
+                            })
+                        </script>
                         <div class="input-container">
                             <label for="name" >Name </label>
                             <input class="transaction-input" type="text" name="name" class="input" value="<?php echo $name; ?>">
@@ -174,10 +220,11 @@
         </div>
     
         <script>
-            function fetch_response(){
+            function fetch_response(response){
                 let btn = document.getElementById('make-transaction-btn')
-                let icon = '<i class="fas fa-exclamation-circle error-icon"></i>' 
-                let response = document.getElementById('transaction-response').innerHTML
+                let inputs = document.getElementsByClassName('transaction-input')
+                let errorIcon = '<i class="fas fa-exclamation-circle error-icon"></i>' 
+                let successIcon = '<i class="fas fa-check success-icon">'
                 response = JSON.parse(response)
                 let success = response.success
                 console.log('success : ' + success)
@@ -189,9 +236,17 @@
                     let i = 0
                     responseErrors.forEach((err) => {
                         if(err != ''){
-                            errors[i].innerHTML = icon + err
+                            errors[i].innerHTML = errorIcon + err
+                            inputs[i].className = 'transaction-input input-error'
                         }
-                        else errors[i].innerHTML = ''
+                        else {
+                            errors[i].innerHTML = ''
+                            inputs[i].className = 'transaction-input'
+                            if(inputs[i] != ''){
+                                errors[i].innerHTML = successIcon
+                                inputs[i].className = 'transaction-input input-success'
+                            }
+                        }
                         i++
                     })
                     btn.innerHTML = 'Confirm'
@@ -202,14 +257,13 @@
                     transactionAnimation()
                     btn.innerHTML = '<i class="fas fa-sync-alt fa-spin mr-5px"></i> Processing transaction'
                     setTimeout(() => {
-                        location.href = 'reciept.php'
+                        location.href = 'receipt.php'
                     }, 8000)
                 }
             }
 
             $(document).ready(() => {
                 $('#transaction-form').submit((e) => {
-
                     e.preventDefault()
                     let btn = document.getElementById('make-transaction-btn')
                     btn.disabled = true
@@ -221,7 +275,7 @@
                     let ifscCode = inputs[3].value
                     let transactionAmount = inputs[4].value
                     let url = 'make-transaction.php'
-                    $('#transaction-response').load(url, {
+                    let reqData = {
                         sender_account_num : <?php echo $sender_acc_num; ?>,
                         sender_balance : <?php echo $sender_balance; ?>,
                         name : holderName,
@@ -229,10 +283,22 @@
                         c_account_num : confirmAccountNumber,
                         ifsc_code : ifscCode,
                         amount : transactionAmount 
-                    })
+                    }
                     setTimeout(() => {
-                        fetch_response()
-                    }, 2000)
+                        $.ajax({
+                            url,
+                            type : 'POST', 
+                            dataType : 'html',
+                            success : (msg) => {
+
+                            },
+                            complete : (res) => {
+                                fetch_response(res.responseText)
+                            },
+                            data : reqData
+                        })
+                    }, 500)
+
                     return false
                 })
             })

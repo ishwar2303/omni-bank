@@ -3,22 +3,6 @@
 session_start();
 require_once("connection.php");
 
-// if(isset($_SESSION['transaction_successfull'])){
-//     header('Location: reciept.php');
-//     exit;
-// }
-
-//variable declaration
-$control = 0;
-$recipient_account_num_error = '';
-$name_error = '';
-$c_account_error = '';
-$amount_error = '';
-$name = '';
-$recipient_account_num = '';
-$ifsc_code = '';
-$ifsc_code_error = '';
-
 function filterText($str){
     $str = strip_tags($str);
     $str = trim($str);
@@ -46,7 +30,7 @@ class response{
 $transaction_response = new response();
 
 if(isset($_POST["name"]) && isset($_POST["account_num"]) && isset($_POST["c_account_num"]) && isset($_POST["ifsc_code"]) && isset($_POST["amount"]) && isset($_POST['sender_account_num']) && isset($_POST['sender_balance'])){
-    // print_r($_POST);
+    
     $control = 1;
     $errors = array();
     for($i=0; $i<5; $i++)
@@ -139,7 +123,7 @@ if(isset($_POST["name"]) && isset($_POST["account_num"]) && isset($_POST["c_acco
         $sql = "INSERT INTO `transactions` (`transaction_id`, `sender_acc_num`, `recipient_acc_num`, `amount`,  `timestamp`) VALUES (NULL, '$sender_acc_num', '$recipient_account_num', '$amount', current_timestamp())";
         $conn->query($sql);
 
-        //after the transaction is complete, the details for the reciept are sent to the reciept page by session
+        //after the transaction is complete, the details for the receipt are sent to the receipt page by session
         $sql = "SELECT * FROM transactions ORDER BY transaction_id DESC LIMIT 0, 1";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
@@ -150,9 +134,7 @@ if(isset($_POST["name"]) && isset($_POST["account_num"]) && isset($_POST["c_acco
         $_SESSION['amount'] = $amount;
         $_SESSION['transaction_id'] = $row['transaction_id'];
         $_SESSION['transaction_time'] = $row['timestamp'];
-        $_SESSION['reciept-working'] = 1;
-        // header('Location: reciept.php');
-        // exit;
+        $_SESSION['receipt-working'] = 1;
     }
 
     $transaction_response->send_response();

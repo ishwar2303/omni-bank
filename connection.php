@@ -4,6 +4,5 @@
     $password = "";
     $dbname = "omni bank";
 
-    // Create connection
     $conn = new mysqli($server_name, $username, $password, $dbname);
 ?>

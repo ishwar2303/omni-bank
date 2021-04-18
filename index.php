@@ -1,12 +1,11 @@
 <!-- 
 
-Name: Pankaj Gautam
+Name: Ishwar Baisla
 Internship: Web Development
 Task: Basic Banking System
 Batch: April 2021 
 
 -->
-
 
 <?php
     //connecting to db
@@ -86,49 +85,5 @@ Batch: April 2021
             <?php $i++; } ?>
         </div>
     </div>
-    <!-- <div class="main">
-
-        <button id="view-customer" type="toggle" onclick="show_customers()">View Customers</button>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>S. No.</th>
-                        <th>Name</th>
-                        <th>Account Number</th>
-                        <th>IFSC Code</th>
-                        <th>Email</th>
-                        <th>Contact Number</th>
-                        <th>Location</th>
-                        <th>State</th>
-                        <th>Current Balance</th>
-                        <th>Operation</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php 
-                        $i = 1;
-                        while($row = $result->fetch_assoc()){
-                    ?>
-                        <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $row['name']; ?></td>
-                            <td><?php echo $row['account_num']; ?></td>
-                            <td><?php echo $row['IFSC_Code']; ?></td>
-                            <td><?php echo $row['email']; ?></td>
-                            <td><?php echo $row['contact_num']; ?></td>
-                            <td><?php echo $row['location']; ?></td>
-                            <td><?php echo $row['State']; ?></td>
-                            <td><?php echo $row['current_balance']; ?></td>
-                            <td><a class="button2" href="transaction.php?c_id=<?php echo $row['customer_id']; ?>" target="_blank">Tranfer money</a></td>
-                        </tr>
-                    <?php $i++; } ?>
-                </tbody>
-            
-            
-            </table>
-        </div>
-    </div> -->
 </body>
 </html>

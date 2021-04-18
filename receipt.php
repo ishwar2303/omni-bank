@@ -3,12 +3,10 @@
     session_start();
     
     if(!isset($_SESSION['transaction_successfull'])){
-        if($_SESSION['reciept-working']==0){}
-        $_SESSION['message'] = 'No transaction has been processed!';
-        $_SESSION['message-css'] = 'error-msg';
         header('Location: index.php');
         exit;
     }
+    
     $success_msg = $_SESSION['success_msg'];
     $sender_account_num = $_SESSION['sender_account_num'];
     $recipient_account_num = $_SESSION['recipient_account_num'];
@@ -38,19 +36,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt</title>
     <link rel="stylesheet" href="public/CSS/styles.css">
-  
+    <link rel="stylesheet" href="public/CSS/receipt.css">
     <?php require 'includes/layout.php'; ?>
-    <style>
-        .search-bar-container{
-            display: none;
-        }
-        .search-bar-button{
-            display: none;
-        }
-        body{
-            background: rgb(148 168 183);
-        }
-    </style>
 </head>
 <body>
 
@@ -59,13 +46,13 @@
     
     <?php require 'includes/header.php'; ?>
 
-    <div class="main pt-50px pb-50px">
+    <div class="main pt-20px pb-50px">
 
         <?php 
             if(isset($_SESSION['transaction_successfull'])){
                 ?>
                 <div class="message success-msg no-print">
-                    Transaction successfull
+                    <i class="fas fa-check mr-5px"></i> Transaction successfull
                 </div>
                 <?php
                 unset($_SESSION['message']);
@@ -138,13 +125,13 @@
             </div>
         </div>    
 
-        <div class="reciept-holder">
+        <div class="receipt-holder">
             
             <div class="button-container no-print">
-                <button onclick="window.print()" class="button">Print</button>
+                <button onclick="window.print()" class="button">Print receipt</button>
             </div>
             <div class="button-container no-print">
-                <a href="index.php"><button onclick="<?php $_SESSION['reciept-working']=0; ?>" class="button">Back to homepage</button></a>
+                <a href="index.php"><button onclick="<?php $_SESSION['receipt-working']=0; ?>" class="button">Back to homepage</button></a>
             </div>
 
         </div>
