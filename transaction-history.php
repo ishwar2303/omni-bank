@@ -55,7 +55,13 @@
                 <?php } ?>
             </tbody>
         </table>
-        <?php } ?>
+        <?php }
+        else {
+            ?>
+                <h3 class="danger"><i class="fas fa-exclamation-circle mr-5px"></i> No transaction were found</h3>
+            <?php
+        }
+        ?>
     </div>
 </body>
 </html>
